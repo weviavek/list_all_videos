@@ -1,0 +1,18 @@
+name: list_all_videos
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.1.0
+
+# Add regular dependencies here.
+dependencies:
+  permission_handler: ^11.0.0
+  path_provider: ^2.1.1
+  device_info_plus: ^9.0.3
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.21.0
+
