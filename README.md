@@ -24,9 +24,10 @@ start using the package.
 
 ## Usage
 
+'''dart
 ListAllVideos object = ListAllVideos();
-      List videos = await object.getAllVideosPath();
-      print(videos.length); 
+List videos = await object.getAllVideosPath();
+print(videos.length);
 
 ## Additional information
 The list_all_videos package is a convenient and efficient tool for Flutter developers looking to list all video file paths stored in a user's local storage. With a few simple lines of code, this package streamlines the process of accessing and organizing video file paths, making it easier to work with and display locally stored videos in your Flutter applications. Whether you're building a media player, video gallery, or any app that requires video file management, list_all_videos simplifies the task, saving you time and effort in the development process.

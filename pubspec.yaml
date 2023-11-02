@@ -1,8 +1,8 @@
 name: list_all_videos
 description: This package is a convenient and efficient tool for Flutter developers looking to list all video file paths stored in a user's local storage. 
-version: 1.0.0
+version: 1.0.3
 homepage: https://www.linkedin.com/in/weviavek/
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/weviavek/list_all_videos.git
 
 environment:
   sdk: ^3.1.0
@@ -17,3 +17,5 @@ dev_dependencies:
   lints: ^2.0.0
   test: ^1.21.0
 
+platforms:
+  android:
