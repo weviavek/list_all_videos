@@ -11,12 +11,11 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This package is a convenient and efficient tool for Flutter developers looking to list all video file paths stored in a user's local storage. 
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+This will help you to list the path of all video files in locla storage
 
 ## Getting started
 
@@ -25,15 +24,9 @@ start using the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
-```
+ListAllVideos object = ListAllVideos();
+      List videos = await object.getAllVideosPath();
+      print(videos.length); 
 
 ## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+The list_all_videos package is a convenient and efficient tool for Flutter developers looking to list all video file paths stored in a user's local storage. With a few simple lines of code, this package streamlines the process of accessing and organizing video file paths, making it easier to work with and display locally stored videos in your Flutter applications. Whether you're building a media player, video gallery, or any app that requires video file management, list_all_videos simplifies the task, saving you time and effort in the development process.
