@@ -5,8 +5,13 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:async';
 
 void main(List<String> args) async {
+  // Create an object of the ListAllVideos class
   ListAllVideos object = ListAllVideos();
+
+  // Get a list of video file paths and store it in the 'videos' variable
   List<String> videos = await object.getAllVideosPath();
+
+  // Iterate through the video paths and print them
   videos.map((currentPath) {
     print(currentPath);
   });
@@ -23,23 +28,27 @@ class ListAllVideos {
     PermissionStatus status;
     var androidInfo = DeviceInfoPlugin();
     try {
+      // Get Android device information and extract the version
       await androidInfo.androidInfo.then((value) {
         androidVersion = int.parse(value.version.release);
       });
     } catch (e) {
       androidVersion = 0;
-      
-      throw ("Unsuporderd Android Version");
+      throw ("Unsupported Android Version");
     }
+
+    // Check Android version and request appropriate permissions
     if (androidVersion >= 13) {
       status = await Permission.videos.request();
     } else {
       status = await Permission.storage.request();
     }
+
     if (status.isGranted) {
       myDirectories.clear();
       videosDirectories.clear();
 
+      // Get a list of external storage directories
       List<Directory>? extDir = await getExternalStorageDirectories();
       List pathForCheck = [];
 
@@ -48,6 +57,8 @@ class ListAllVideos {
         String actualPath = path.substring(13, path.length - 1);
         int found = 0;
         int startIndex = 0;
+
+        // Extract the relevant part of the path
         for (int pathIndex = actualPath.length - 1;
             pathIndex >= 0;
             pathIndex--) {
@@ -62,6 +73,7 @@ class ListAllVideos {
         var splitPath = actualPath.substring(0, startIndex + 1);
         pathForCheck.add(splitPath);
       }
+
       for (var pForCheck in pathForCheck) {
         Directory directory = Directory(pForCheck);
         if (directory.statSync().type == FileSystemEntityType.directory) {
@@ -75,12 +87,14 @@ class ListAllVideos {
             }
             if (!directories.toString().contains('.')) {
               String dirs = "$directories/";
+              print("dfgdfg");
               myDirectories.add(dirs);
             }
           }
         }
       }
     }
+
     for (; myIndex < myDirectories.length; myIndex++) {
       var myDirs = Directory(myDirectories[myIndex]);
       if (myDirs.statSync().type == FileSystemEntityType.directory) {
@@ -88,11 +102,13 @@ class ListAllVideos {
           var initialDirectories = myDirs.listSync().map((e) {
             return e.path;
           }).toList();
+
           for (var video in initialDirectories) {
             if (video.toString().endsWith('.mp4')) {
               videosDirectories.add(video);
             }
           }
+
           for (var directories in initialDirectories) {
             if (!directories.toString().contains('.') &&
                 !directories.toString().contains('android') &&
@@ -123,6 +139,7 @@ class ListAllVideos {
         }
       }
     }
+
     return videosDirectories;
   }
 }
