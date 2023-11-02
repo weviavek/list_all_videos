@@ -24,7 +24,7 @@ start using the package.
 
 ## Usage
 
-'''dart
+```dart
 ListAllVideos object = ListAllVideos();
 List videos = await object.getAllVideosPath();
 print(videos.length);
