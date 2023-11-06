@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:list_all_videos/model/video_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -9,7 +10,7 @@ void main(List<String> args) async {
   ListAllVideos object = ListAllVideos();
 
   // Get a list of video file paths and store it in the 'videos' variable
-  List<String> videos = await object.getAllVideosPath();
+  List<VideoDetails> videos = await object.getAllVideosPath();
 
   // Iterate through the video paths and print them
   videos.map((currentPath) {
@@ -18,13 +19,13 @@ void main(List<String> args) async {
 }
 
 class ListAllVideos {
-  List<String> videosDirectories = [];
+  List<VideoDetails> videosDirectories = [];
   List allDirectories = [];
   List myDirectories = [];
   int myIndex = 0;
   late int androidVersion;
 
-  Future<List<String>> getAllVideosPath() async {
+  Future<List<VideoDetails>> getAllVideosPath() async {
     PermissionStatus status;
     var androidInfo = DeviceInfoPlugin();
     try {
@@ -83,11 +84,10 @@ class ListAllVideos {
 
           for (var directories in initialDirectories) {
             if (directories.toString().endsWith('.mp4')) {
-              videosDirectories.add("$directories/");
+              videosDirectories.add(VideoDetails(directories));
             }
             if (!directories.toString().contains('.')) {
               String dirs = "$directories/";
-              print("dfgdfg");
               myDirectories.add(dirs);
             }
           }
@@ -105,7 +105,7 @@ class ListAllVideos {
 
           for (var video in initialDirectories) {
             if (video.toString().endsWith('.mp4')) {
-              videosDirectories.add(video);
+              videosDirectories.add(VideoDetails(video));
             }
           }
 
@@ -129,7 +129,7 @@ class ListAllVideos {
 
                   for (var video in videoDirs) {
                     if (video.toString().endsWith('.mp4')) {
-                      videosDirectories.add(video);
+                      videosDirectories.add(VideoDetails(video));
                     }
                   }
                 }

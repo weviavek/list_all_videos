@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list_all_videos/list_all_videos.dart';
+import 'package:list_all_videos/model/video_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,9 +37,9 @@ class VideoListPage extends StatelessWidget {
                 snapshot.connectionState == ConnectionState.done
                     ? ListView.builder(
                         itemBuilder: (context, index) {
-                          List<String> videos = snapshot.data!;
+                          List<VideoDetails> videos = snapshot.data!;
                           return ListTile(
-                            title: Text(videos[index]),
+                            title: Text(videos[index].videoName),
                           );
                         },
                       )
