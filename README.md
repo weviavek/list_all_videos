@@ -1,15 +1,3 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
 
 This package is a convenient and efficient tool for Flutter developers looking to list all video file paths stored in a user's local storage. 
 
@@ -22,7 +10,7 @@ This will help you to list the path of all video files in locla storage
 Add list_all_videos to dependencies in pubspec.yaml
 ```yaml
 dependencies:
-    list_all_videos: ^1.0.4
+    list_all_videos: ^1.0.9 
 ```
 or
 run following command in your terminal
@@ -33,8 +21,14 @@ flutter pub add list_all_videos
 
 ```dart
 ListAllVideos object = ListAllVideos();
-List videos = await object.getAllVideosPath();
-print(videos.length);
+//lists all videos in the device
+List<VideoDetails> videos = await object.getAllVideosPath();
+```
+## Implementation
+```dart
+ListAllVideos object = ListAllVideos();
+//lists all videos in the device. VideoDetails is a class to store video details such as video name, video size etc.
+List<VideoDetails> videos = await object.getAllVideosPath();
 ```
 
 ## Additional information

@@ -1,19 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:list_all_videos/ThumbnailTile.dart';
 import 'package:list_all_videos/list_all_videos.dart';
-import 'package:test/test.dart';
+import 'package:list_all_videos/video_model.dart';
 
 void main() {
-  group('A group of tests', () async {
-    ListAllVideos object = ListAllVideos();
-    List videos = await object.getAllVideosPath();
-    print(videos.length);
-    setUp(() {
-      // Additional setup goes here.
-    });
+  runApp(const MyApp());
+}
 
-    test('First Test', () async {
-      ListAllVideos object = ListAllVideos();
-      List videos = await object.getAllVideosPath();
-      print(videos.length);
-    });
-  });
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const DemoList());
+  }
+}
+
+class DemoList extends StatefulWidget {
+  const DemoList({super.key});
+
+  @override
+  State<DemoList> createState() => _DemoListState();
+}
+
+class _DemoListState extends State<DemoList> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("DemoList"),
+      ),
+      body: FutureBuilder(
+        future: ListAllVideos().getAllVideosPath(),
+        builder: (context, snapshot) {
+          return snapshot.connectionState == ConnectionState.waiting
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.separated(
+                  itemBuilder: (context, index) {
+                    VideoDetails currentVideo = snapshot.data![index];
+                    return ListTile(
+                        title: Text(currentVideo.videoName),
+                        subtitle: Text(currentVideo.videoSize),
+                        leading: ThumbnailTile(
+                          thumbnailController: currentVideo.thumbnailController,
+                          height: 80,
+                          width: 150,
+                        ));
+                  },
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: snapshot.data!.length);
+        },
+      ),
+    );
+  }
 }

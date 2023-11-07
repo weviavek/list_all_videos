@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:list_all_videos/model/video_model.dart';
+import 'package:list_all_videos/video_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'model/video_model.dart';
+import 'video_model.dart';
 
 class Thumbnail {
   final MethodChannel _channel = const MethodChannel('thumbnailGenerator');

@@ -1,4 +1,3 @@
-## 1.0.3
-- Initial version.
-## 1.0.4
-- Updated.
+## 0.0.1
+
+* TODO: Describe initial release.
