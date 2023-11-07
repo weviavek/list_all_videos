@@ -1,9 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'list_all_videos.dart';
-
-
 class Thumbnail {
   final MethodChannel _channel = const MethodChannel('thumbnailGenerator');
   Future<String> generate(

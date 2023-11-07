@@ -10,7 +10,7 @@ void main(List<String> args) async {
   ListAllVideos object = ListAllVideos();
 
   // Get a list of video file paths and store it in the 'videos' variable
-  List<VideoDetails> videos = await object.getAllVideosPath();
+  List<VideoDetails> videos = await object.getAllVideos();
 
   // Iterate through the video paths and print them
   videos.map((currentPath) {
@@ -24,9 +24,9 @@ class ListAllVideos {
   List myDirectories = [];
   int myIndex = 0;
   late int androidVersion;
-
-  Future<List<VideoDetails>> getAllVideosPath() async {
-    PermissionStatus status;
+  late PermissionStatus permissionStatus;
+  
+  Future<List<VideoDetails>> getAllVideos() async {
     var androidInfo = DeviceInfoPlugin();
     try {
       // Get Android device information and extract the version
@@ -40,12 +40,12 @@ class ListAllVideos {
 
     // Check Android version and request appropriate permissions
     if (androidVersion >= 13) {
-      status = await Permission.videos.request();
+      permissionStatus = await Permission.videos.request();
     } else {
-      status = await Permission.storage.request();
+      permissionStatus = await Permission.storage.request();
     }
 
-    if (status.isGranted) {
+    if (permissionStatus.isGranted) {
       myDirectories.clear();
       videosDirectories.clear();
 

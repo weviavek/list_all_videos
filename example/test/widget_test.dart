@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:list_all_videos/ThumbnailTile.dart';
 import 'package:list_all_videos/list_all_videos.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
         home: const DemoList());
   }
+
 }
 
 class DemoList extends StatefulWidget {
@@ -29,10 +29,6 @@ class DemoList extends StatefulWidget {
 }
 
 class _DemoListState extends State<DemoList> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +37,7 @@ class _DemoListState extends State<DemoList> {
         title: const Text("DemoList"),
       ),
       body: FutureBuilder(
-        future: ListAllVideos().getAllVideosPath(),
+        future: ListAllVideos().getAllVideos(),
         builder: (context, snapshot) {
           return snapshot.connectionState == ConnectionState.waiting
               ? const Center(

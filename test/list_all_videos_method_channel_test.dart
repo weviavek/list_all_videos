@@ -41,7 +41,7 @@ class _DemoListState extends State<DemoList> {
         title: const Text("DemoList"),
       ),
       body: FutureBuilder(
-        future: ListAllVideos().getAllVideosPath(),
+        future: ListAllVideos().getAllVideos(),
         builder: (context, snapshot) {
           return snapshot.connectionState == ConnectionState.waiting
               ? const Center(
