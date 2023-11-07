@@ -1,12 +1,30 @@
 import 'dart:io';
 
+import '../generate_thumpnail.dart';
+
 class VideoDetails {
   final String videoPath;
   late String videoName;
   late String videoSize;
+  late ThumbnailController thumbnailController;
   VideoDetails(this.videoPath) {
     videoName = VideoHelper.videoNameHelper(videoPath);
     videoSize = VideoHelper.videoSizeHelper(videoPath);
+    thumbnailController = ThumbnailController(currentVideo: this);
+  }
+}
+
+class ThumbnailController {
+  late VideoDetails currentVideo;
+  bool isInitialized = false;
+  String? thumbnailPath;
+  ThumbnailController({required this.currentVideo});
+  Future<String> initThumbnail() async {
+    if (isInitialized==false) {
+      thumbnailPath = await Thumbnail().generate(currentVideo);
+      isInitialized = true;
+    }
+    return thumbnailPath!;
   }
 }
 
@@ -27,5 +45,4 @@ class VideoHelper {
     String parentPath = currentFile.path;
     return videoPath.split(parentPath).last;
   }
-
 }
