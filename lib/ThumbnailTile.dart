@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'video_model.dart';
+
+import 'list_all_videos.dart';
 
 // A widget to display a thumbnail image
 class ThumbnailTile extends StatelessWidget {

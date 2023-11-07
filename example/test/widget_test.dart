@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list_all_videos/ThumbnailTile.dart';
 import 'package:list_all_videos/list_all_videos.dart';
-import 'package:list_all_videos/video_model.dart';
 
 
 void main() {

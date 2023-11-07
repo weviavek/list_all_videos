@@ -16,6 +16,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
+    // ignore: unused_local_variable
     final ListAllVideos plugin = ListAllVideos();
   });
 }

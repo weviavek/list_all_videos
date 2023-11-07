@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:list_all_videos/ThumbnailTile.dart';
 import 'package:list_all_videos/list_all_videos.dart';
-import 'package:list_all_videos/video_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,27 +11,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Video List Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const DemoList());
+        home: const VideoList());
   }
 }
 
-class DemoList extends StatefulWidget {
-  const DemoList({super.key});
-
-  @override
-  State<DemoList> createState() => _DemoListState();
-}
-
-class _DemoListState extends State<DemoList> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class VideoList extends StatelessWidget {
+  const VideoList({super.key});
 
   @override
   Widget build(BuildContext context) {

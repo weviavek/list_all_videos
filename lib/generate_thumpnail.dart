@@ -1,15 +1,15 @@
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'video_model.dart';
+import 'list_all_videos.dart';
+
 
 class Thumbnail {
   final MethodChannel _channel = const MethodChannel('thumbnailGenerator');
   Future<String> generate(
-    VideoDetails currentVideo,
+    String videoPath,
   ) async {
     try {
-      final String videoPath = currentVideo.videoPath;
       final String thumbnailLocation = (await getTemporaryDirectory()).path;
 
       final String generatedThumbnailPath =

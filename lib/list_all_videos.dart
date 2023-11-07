@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:list_all_videos/video_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:async';
+import 'generate_thumpnail.dart';
 
 void main(List<String> args) async {
   // Create an object of the ListAllVideos class
@@ -141,5 +141,60 @@ class ListAllVideos {
     }
 
     return videosDirectories;
+  }
+}
+
+// A class to store video details
+class VideoDetails {
+  final String videoPath;
+  late String videoName;
+  late String videoSize;
+  late ThumbnailController thumbnailController;
+
+  VideoDetails(this.videoPath) {
+    // Initialize video details
+    videoName = VideoHelper.videoNameHelper(videoPath);
+    videoSize = VideoHelper.videoSizeHelper(videoPath);
+    thumbnailController = ThumbnailController(videoPath: this.videoPath);
+  }
+}
+
+// A class to manage thumbnail generation and initialization
+class ThumbnailController {
+  late String videoPath;
+  bool isInitialized = false;
+  late String thumbnailPath;
+
+  ThumbnailController({required this.videoPath});
+
+  // Asynchronously initialize the thumbnail
+  Future<String> initThumbnail() async {
+    if (isInitialized == false) {
+      thumbnailPath = await Thumbnail().generate(videoPath);
+      isInitialized = true;
+    }
+    return thumbnailPath;
+  }
+}
+
+// Helper class for working with video file details
+class VideoHelper {
+  // Calculate video file size and format it
+  static String videoSizeHelper(String path) {
+    int size = File(path).lengthSync();
+    List<String> sizeNotations = ['bytes', 'KB', 'MB', 'GB'];
+    int i = 0;
+    while (size > 1024) {
+      size = size ~/ 1024;
+      i++;
+    }
+    return "$size ${sizeNotations[i]}";
+  }
+
+  // Extract video file name from its path
+  static videoNameHelper(String videoPath) {
+    final currentFile = File(videoPath);
+    String parentPath = currentFile.parent.path;
+    return videoPath.split('$parentPath/').last;
   }
 }
