@@ -1,6 +1,15 @@
 # Changelog
+## [1.2.0] - 24/12/2023
+- bugs in generating thumbnails in some devices fixed.
 
-All notable changes to the "Your Package Name" package will be documented in this file.
+## [1.1.1] - 18/12/2023
+- bugs fixed.
+
+## [1.1.0] - 13/12/2023
+- bugs fixed.
+
+## [1.0.9] - 09/11/2023
+- bugs fixed.
 
 ## [1.0.8] - 07/11/2023
 

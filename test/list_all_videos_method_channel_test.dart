@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:list_all_videos/ThumbnailTile.dart';
+import 'package:list_all_videos/thumbnail/ThumbnailTile.dart';
 import 'package:list_all_videos/list_all_videos.dart';
+import 'package:list_all_videos/model/video_model.dart';
 
 
 void main() {
@@ -41,7 +42,7 @@ class _DemoListState extends State<DemoList> {
         title: const Text("DemoList"),
       ),
       body: FutureBuilder(
-        future: ListAllVideos().getAllVideos(),
+        future: ListAllVideos().getAllVideosPath(),
         builder: (context, snapshot) {
           return snapshot.connectionState == ConnectionState.waiting
               ? const Center(

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
-import 'list_all_videos.dart';
+import '../model/thumbnail_controller.dart';
 
 // A widget to display a thumbnail image
 class ThumbnailTile extends StatelessWidget {
@@ -22,16 +21,23 @@ class ThumbnailTile extends StatelessWidget {
     // Use FutureBuilder to asynchronously load the thumbnail image
     return FutureBuilder(
       future: thumbnailController.initThumbnail(),
-      builder: (context, snapshot) => thumbnailController.isInitialized
-          ? SizedBox(
-              height: height,
-              width: width,
-              child: Image.file(
-                File(thumbnailController.thumbnailPath),
-                fit: BoxFit.cover,
-              ),
-            )
-          : const CircularProgressIndicator(), // Display a loading indicator while initializing
+      builder: (context, snapshot) {
+        // Check if the thumbnail is initialized
+        if (thumbnailController.isInitialized) {
+          // Display the thumbnail image
+          return SizedBox(
+            height: height,
+            width: width,
+            child: Image.file(
+              File(thumbnailController.thumbnailPath),
+              fit: BoxFit.cover,
+            ),
+          );
+        } else {
+          // Display a loading indicator while initializing
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

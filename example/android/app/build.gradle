@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.we.viavek.list_all_videos_example"
+    namespace "com.we.viavek.list_all_videos"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
