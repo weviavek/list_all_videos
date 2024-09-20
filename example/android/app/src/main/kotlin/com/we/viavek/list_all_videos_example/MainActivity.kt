@@ -2,6 +2,8 @@
 
  import android.graphics.Bitmap
  import android.media.MediaMetadataRetriever
+ import io.flutter.embedding.android.FlutterActivity
+ import io.flutter.embedding.engine.FlutterEngine
  import io.flutter.plugin.common.MethodCall
  import io.flutter.plugin.common.MethodChannel
  import java.io.File
@@ -20,8 +22,9 @@
              if (call.method == "generate") {
                  val videoPath = call.argument<String>("videoPath")
                  val thumbnailLocation =call.argument<String>("thumbnailLocation")
-                 val thumbnailName=File(videoPath).name
-                 val generatedThumbnailPath = generateThumbnail(videoPath!!, thumbnailLocation!!,thumbnailName)
+                 val thumbnailName= videoPath?.let { File(it).name }
+                 val generatedThumbnailPath =
+                     thumbnailName?.let { generateThumbnail(videoPath!!, thumbnailLocation!!, it) }
                  result.success(generatedThumbnailPath)
              }
          }
