@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'dart:isolate';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -73,29 +73,27 @@ class ListAllVideos {
       List pathForCheck = [];
 
       // Iterate through external storage directories
-      await compute((message) {
-        for (var paths in extDir!) {
-          String path = paths.toString();
-          String actualPath = path.substring(13, path.length - 1);
-          int found = 0;
-          int startIndex = 0;
+      for (var paths in extDir!) {
+        String path = paths.toString();
+        String actualPath = path.substring(13, path.length - 1);
+        int found = 0;
+        int startIndex = 0;
 
-          // Extract the relevant part of the path
-          for (int pathIndex = actualPath.length - 1;
-              pathIndex >= 0;
-              pathIndex--) {
-            if (actualPath[pathIndex] == "/") {
-              found++;
-              if (found == 4) {
-                startIndex = pathIndex;
-                break;
-              }
+        // Extract the relevant part of the path
+        for (int pathIndex = actualPath.length - 1;
+            pathIndex >= 0;
+            pathIndex--) {
+          if (actualPath[pathIndex] == "/") {
+            found++;
+            if (found == 4) {
+              startIndex = pathIndex;
+              break;
             }
           }
-          var splitPath = actualPath.substring(0, startIndex + 1);
-          pathForCheck.add(splitPath);
         }
-      }, "Iterate through external storage directories");
+        var splitPath = actualPath.substring(0, startIndex + 1);
+        pathForCheck.add(splitPath);
+      }
 
       // Iterate through the paths for checking
       for (var pForCheck in pathForCheck) {
@@ -130,6 +128,31 @@ class ListAllVideos {
     }
 
     // Iterate through the directories in myDirectories list
+    final receivePort = ReceivePort();
+
+    // Iniciar el isolate
+    await Isolate.spawn(
+        _findVideosIsolate, [receivePort.sendPort, myDirectories]);
+
+    // Esperar la respuesta del isolate
+    final videoDirectories = await receivePort.first as List<VideoDetails>;
+
+    // Return the list of VideoDetails objects
+
+    videoDirectories
+        .removeWhere((element) => element.videoName.startsWith('.'));
+
+    return videoDirectories;
+  }
+
+  void _findVideosIsolate(List<dynamic> args) {
+    SendPort sendPort = args[0];
+    List<String> myDirectories =
+        args[1].map<String>((e) => e.toString()).toList();
+    List<VideoDetails> videosDirectories = [];
+
+    int myIndex = 0;
+
     for (; myIndex < myDirectories.length; myIndex++) {
       var myDirs = Directory(myDirectories[myIndex]);
 
@@ -143,9 +166,7 @@ class ListAllVideos {
           // Iterate through the initial directories
           for (var video in initialDirectories) {
             if (video.toString().endsWith('.mp4')) {
-              // Add video details to the list
               bool contains = false;
-              // Add video details to the list
               for (final VideoDetails current in videosDirectories) {
                 if (current.videoPath == video) {
                   contains = true;
@@ -155,7 +176,6 @@ class ListAllVideos {
             }
           }
 
-          // Iterate through the directories in the initial directories
           for (var directories in initialDirectories) {
             if (!directories.toString().contains('.') &&
                 !directories.toString().contains('android') &&
@@ -164,25 +184,21 @@ class ListAllVideos {
 
               var tempDir = Directory(dirs);
 
-              // Check if the directory exists and meets certain conditions
               if (!tempDir.toString().contains('.') &&
                   !tempDir.toString().contains('android') &&
                   !tempDir.toString().contains('Android')) {
                 myDirectories.add(directories);
               }
 
-              // Check if the directory is of type directory
               if (tempDir.statSync().type == FileSystemEntityType.directory) {
                 if (!tempDir.toString().contains('/Android')) {
                   var videoDirs = tempDir.listSync().map((e) {
                     return e.path;
                   }).toList();
 
-                  // Iterate through the video directories
                   for (var video in videoDirs) {
                     if (video.toString().endsWith('.mp4')) {
                       bool contains = false;
-                      // Add video details to the list
                       for (final VideoDetails current in videosDirectories) {
                         if (current.videoPath == video) {
                           contains = true;
@@ -199,10 +215,6 @@ class ListAllVideos {
       }
     }
 
-    // Return the list of VideoDetails objects
-
-    videosDirectories
-        .removeWhere((element) => element.videoName.startsWith('.'));
-    return videosDirectories;
+    sendPort.send(videosDirectories);
   }
 }
