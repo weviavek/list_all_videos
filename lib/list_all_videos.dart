@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -72,27 +73,29 @@ class ListAllVideos {
       List pathForCheck = [];
 
       // Iterate through external storage directories
-      for (var paths in extDir!) {
-        String path = paths.toString();
-        String actualPath = path.substring(13, path.length - 1);
-        int found = 0;
-        int startIndex = 0;
+      await compute((message) {
+        for (var paths in extDir!) {
+          String path = paths.toString();
+          String actualPath = path.substring(13, path.length - 1);
+          int found = 0;
+          int startIndex = 0;
 
-        // Extract the relevant part of the path
-        for (int pathIndex = actualPath.length - 1;
-            pathIndex >= 0;
-            pathIndex--) {
-          if (actualPath[pathIndex] == "/") {
-            found++;
-            if (found == 4) {
-              startIndex = pathIndex;
-              break;
+          // Extract the relevant part of the path
+          for (int pathIndex = actualPath.length - 1;
+              pathIndex >= 0;
+              pathIndex--) {
+            if (actualPath[pathIndex] == "/") {
+              found++;
+              if (found == 4) {
+                startIndex = pathIndex;
+                break;
+              }
             }
           }
+          var splitPath = actualPath.substring(0, startIndex + 1);
+          pathForCheck.add(splitPath);
         }
-        var splitPath = actualPath.substring(0, startIndex + 1);
-        pathForCheck.add(splitPath);
-      }
+      }, "Iterate through external storage directories");
 
       // Iterate through the paths for checking
       for (var pForCheck in pathForCheck) {
