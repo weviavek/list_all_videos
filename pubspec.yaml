@@ -1,6 +1,6 @@
 name: list_all_videos
 description: The list_all_videos package is an indispensable resource for Flutter developers who want to efficiently retrieve video file paths from a user's local storage.
-version: 1.2.0
+version: 1.2.1
 homepage: https://www.linkedin.com/in/weviavek/
 documentation: https://medium.com/@we.viavek/list-video-files-in-local-storage-with-thumbnail-in-flutter-356d33bc1bfd
 repository: https://github.com/weviavek/list_all_videos.git
