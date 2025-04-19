@@ -1,4 +1,12 @@
 # Changelog
+## [1.3.3] - 06/02/2025
+- bugs in generating thumbnails in some devices fixed.
+
+## [1.3.2] - 02/01/2025
+- bugs in generating thumbnails in some devices fixed.
+- removed support for ios.
+- dependencies upgrades.
+
 ## [1.2.0] - 24/12/2023
 - bugs in generating thumbnails in some devices fixed.
 
